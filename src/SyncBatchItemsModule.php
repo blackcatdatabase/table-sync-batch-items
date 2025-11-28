@@ -32,15 +32,39 @@ final class SyncBatchItemsModule implements ModuleInterface
         $table = SqlIdentifier::qi($db, $this->table());
         $view  = SqlIdentifier::qi($db, self::contractView());
 
+        if ($d->isMysql()) {
+            $createViewSql = <<<'SQL'
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_sync_batch_items AS
+SELECT
+  id,
+  batch_id,
+  event_key,
+  status,
+  error,
+  created_at
+FROM sync_batch_items;
+SQL;
+        } else {
+            $createViewSql = <<<'SQL'
+CREATE OR REPLACE VIEW vw_sync_batch_items AS
+SELECT
+  id,
+  batch_id,
+  event_key,
+  status,
+  error,
+  created_at
+FROM sync_batch_items;
+SQL;
+        }
+
         if (\class_exists('\\BlackCat\\Database\\Support\\DdlGuard')) {
-            (new \BlackCat\Database\Support\DdlGuard($db, $d))->applyCreateView(
-                "CREATE VIEW {$view} AS SELECT * FROM {$table}"
-            );
+            (new \BlackCat\Database\Support\DdlGuard($db, $d))->applyCreateView($createViewSql);
         } else {
             // Prefer CREATE OR REPLACE VIEW (gentle on dependencies)
-            $sql = "CREATE OR REPLACE VIEW {$view} AS SELECT * FROM {$table}";
-            $db->exec($sql);
+            $db->exec($createViewSql);
         }
+
     }
 
     public function upgrade(Database $db, SqlDialect $d, string $from): void
@@ -69,6 +93,13 @@ final class SyncBatchItemsModule implements ModuleInterface
 
         // Quick index/FK check – generator injects names (case-sensitive per DB)
         $expectedIdx = [];
+        if ($d->isMysql()) {
+            // Drop PG-only index naming patterns (e.g., GIN/GiST)
+            $expectedIdx = array_values(array_filter(
+                $expectedIdx,
+                static fn(string $n): bool => !str_starts_with($n, 'gin_') && !str_starts_with($n, 'gist_')
+            ));
+        }
         $expectedFk  = [ 'fk_sbi_batch' ];
 
         $haveIdx = $hasTable ? SchemaIntrospector::listIndexes($db, $d, $table)     : [];
