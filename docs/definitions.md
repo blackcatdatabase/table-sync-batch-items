@@ -6,11 +6,11 @@ Individual entries inside sync batches.
 | Column | Type | Null | Default | Description |
 | --- | --- | --- | --- | --- |
 | batch_id | BIGINT | NO |  | Parent batch (FK sync_batches.id). |
-| created_at | TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
+| created_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
 | error | TEXT | YES |  | Failure reason, if applicable. |
 | event_key | CHAR(36) | NO |  | Event identifier transported in the batch. |
 | id | BIGINT | NO |  | Surrogate primary key. |
-| status | TEXT | NO | pending | Item status. (enum: pending, sent, applied, failed, skipped) |
+| status | ENUM('pending','sent','applied','failed','skipped') | NO | pending | Item status. (enum: pending, sent, applied, failed, skipped) |
 
 ## Engine Details
 
@@ -57,5 +57,5 @@ Foreign keys:
 ## Views
 | View | Engine | Flags | File |
 | --- | --- | --- | --- |
-| vw_sync_batch_items | mysql | algorithm=MERGE, security=INVOKER | [packages\sync-batch-items\schema\040_views.mysql.sql](https://github.com/blackcatacademy/blackcat-database/packages/sync-batch-items/schema/040_views.mysql.sql) |
-| vw_sync_batch_items | postgres |  | [packages\sync-batch-items\schema\040_views.postgres.sql](https://github.com/blackcatacademy/blackcat-database/packages/sync-batch-items/schema/040_views.postgres.sql) |
+| vw_sync_batch_items | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views.mysql.sql](schema\040_views.mysql.sql) |
+| vw_sync_batch_items | postgres |  | [schema\040_views.postgres.sql](schema\040_views.postgres.sql) |
