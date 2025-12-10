@@ -6,11 +6,11 @@ Individual entries inside sync batches.
 | Column | Type | Null | Default | Description |
 | --- | --- | --- | --- | --- |
 | batch_id | BIGINT | NO |  | Parent batch (FK sync_batches.id). |
-| created_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
+| created_at | mysql: DATETIME(6) / postgres: TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
 | error | TEXT | YES |  | Failure reason, if applicable. |
 | event_key | CHAR(36) | NO |  | Event identifier transported in the batch. |
 | id | BIGINT | NO |  | Surrogate primary key. |
-| status | ENUM('pending','sent','applied','failed','skipped') | NO | pending | Item status. (enum: pending, sent, applied, failed, skipped) |
+| status | mysql: ENUM('pending','sent','applied','failed','skipped') / postgres: TEXT | NO | pending | Item status. (enum: pending, sent, applied, failed, skipped) |
 
 ## Engine Details
 
