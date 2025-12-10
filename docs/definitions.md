@@ -57,5 +57,5 @@ Foreign keys:
 ## Views
 | View | Engine | Flags | File |
 | --- | --- | --- | --- |
-| vw_sync_batch_items | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views.mysql.sql](schema\040_views.mysql.sql) |
-| vw_sync_batch_items | postgres |  | [schema\040_views.postgres.sql](schema\040_views.postgres.sql) |
+| vw_sync_batch_items | mysql | algorithm=MERGE, security=INVOKER | [../schema/040_views.mysql.sql](../schema/040_views.mysql.sql) |
+| vw_sync_batch_items | postgres |  | [../schema/040_views.postgres.sql](../schema/040_views.postgres.sql) |
