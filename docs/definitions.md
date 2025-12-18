@@ -3,14 +3,14 @@
 Individual entries inside sync batches.
 
 ## Columns
-| Column | Type | Null | Default | Description |
-| --- | --- | --- | --- | --- |
-| id | BIGINT | NO |  | Surrogate primary key. |
-| batch_id | BIGINT | NO |  | Parent batch (FK sync_batches.id). |
-| event_key | CHAR(36) | NO |  | Event identifier transported in the batch. |
-| status | mysql: ENUM('pending','sent','applied','failed','skipped') / postgres: TEXT | NO | pending | Item status. (enum: pending, sent, applied, failed, skipped) |
-| error | TEXT | YES |  | Failure reason, if applicable. |
-| created_at | mysql: DATETIME(6) / postgres: TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
+| Column | Type | Null | Default | Description | Crypto |
+| --- | --- | --- | --- | --- | --- |
+| id | BIGINT | NO |  | Surrogate primary key. |  |
+| batch_id | BIGINT | NO |  | Parent batch (FK sync_batches.id). |  |
+| event_key | CHAR(36) | NO |  | Event identifier transported in the batch. |  |
+| status | mysql: ENUM('pending','sent','applied','failed','skipped') / postgres: TEXT | NO | pending | Item status. (enum: pending, sent, applied, failed, skipped) |  |
+| error | TEXT | YES |  | Failure reason, if applicable. |  |
+| created_at | mysql: DATETIME(6) / postgres: TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |  |
 
 ## Engine Details
 
