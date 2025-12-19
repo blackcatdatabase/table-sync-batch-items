@@ -1,0 +1,26 @@
+{
+  "tables": {
+    "sync_batch_items": {
+      "columns": {
+        "batch_id": {
+          "strategy": "passthrough"
+        },
+        "created_at": {
+          "strategy": "passthrough"
+        },
+        "error": {
+          "strategy": "passthrough"
+        },
+        "event_key": {
+          "strategy": "passthrough"
+        },
+        "id": {
+          "strategy": "passthrough"
+        },
+        "status": {
+          "strategy": "passthrough"
+        }
+      }
+    }
+  }
+}
